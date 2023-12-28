@@ -2,15 +2,32 @@ name: Build
 
 on:
   workflow_dispatch:
+    inputs:
+      platform:
+        description: 'Build Platform'
+        required: true
+        type: choice
+        default: 'x64'
+        options:
+          - x64
+          - x86
+      configuration:
+        description: 'Build Configuration'
+        required: true
+        type: choice
+        default: 'Release'
+        options:
+          - Release
+          - Debug
   push:
     branches:
       - main
 
 env:
+  BUILD_CONFIG: ${{ github.event.inputs.configuration || 'Release' }}
+  PLATFORM: ${{ github.event.inputs.platform || 'x64' }}
   SOLUTION_FILE: ./WindowTool.sln
-  BUILD_CONFIG: Release
-  OUTPUT_DIR_X64: ./bin/x64/
-  OUTPUT_DIR_X86: ./bin/x86/
+  OUTPUT_DIR: ./bin/
 
 jobs:
   build:
@@ -24,27 +41,20 @@ jobs:
     - name: Setup Microsoft Build Engine
       uses: microsoft/setup-msbuild@v1
 
-    - name: Build x64
+    - name: Build
       run: |
-        msbuild /p:Configuration=${{ env.BUILD_CONFIG }} /p:Platform=x64 "/p:OutDir=${{ env.OUTPUT_DIR_X64 }}" "${{ env.SOLUTION_FILE }}"
-
-    - name: Build x86
-      run: |
-        msbuild /p:Configuration=${{ env.BUILD_CONFIG }} /p:Platform=x86 "/p:OutDir=${{ env.OUTPUT_DIR_X86 }}" "${{ env.SOLUTION_FILE }}"
+        msbuild `
+          "/p:Configuration=${{ env.BUILD_CONFIG }}" `
+          "/p:Platform=${{ env.PLATFORM }}" `
+          "/p:OutDir=${{ env.OUTPUT_DIR }}${{ env.PLATFORM }}/" `
+          "${{ env.SOLUTION_FILE }}"
 
     - name: Copy License to Output
       run: |
-        cp LICENSE "${{ env.OUTPUT_DIR_X64 }}"
-        cp LICENSE "${{ env.OUTPUT_DIR_X86 }}"
+        cp LICENSE "${{ env.OUTPUT_DIR }}${{ env.PLATFORM }}/"
 
-    - name: Upload x64 Artifacts
+    - name: Upload Artifacts
       uses: actions/upload-artifact@v4
       with:
-        name: x64-artifacts
-        path: ${{ env.OUTPUT_DIR_X64 }}
-
-    - name: Upload x86 Artifacts
-      uses: actions/upload-artifact@v4
-      with:
-        name: x86-artifacts
-        path: ${{ env.OUTPUT_DIR_X86 }}
+        name: ${{ env.PLATFORM }}-artifacts
+        path: ${{ env.OUTPUT_DIR }}${{ env.PLATFORM }}/
