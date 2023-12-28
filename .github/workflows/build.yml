@@ -19,13 +19,25 @@ on:
         options:
           - Release
           - Debug
+  workflow_call:
+    inputs:
+      platform:
+        description: 'Build Platform'
+        required: true
+        type: string
+        default: 'x64'
+      configuration:
+        description: 'Build Configuration'
+        required: true
+        type: string
+        default: 'Release'
   push:
     branches:
       - main
 
 env:
-  BUILD_CONFIG: ${{ github.event.inputs.configuration || 'Release' }}
-  PLATFORM: ${{ github.event.inputs.platform || 'x64' }}
+  BUILD_CONFIG: ${{ inputs.configuration || 'Release' }}
+  PLATFORM: ${{ inputs.platform || 'x64' }}
   SOLUTION_FILE: ./WindowTool.sln
   OUTPUT_DIR: ./bin/
 
@@ -49,12 +61,8 @@ jobs:
           "/p:OutDir=${{ env.OUTPUT_DIR }}${{ env.PLATFORM }}/" `
           "${{ env.SOLUTION_FILE }}"
 
-    - name: Copy License to Output
-      run: |
-        cp LICENSE "${{ env.OUTPUT_DIR }}${{ env.PLATFORM }}/"
-
     - name: Upload Artifacts
       uses: actions/upload-artifact@v4
       with:
-        name: ${{ env.PLATFORM }}-artifacts
+        name: ${{ env.PLATFORM }}-artifact
         path: ${{ env.OUTPUT_DIR }}${{ env.PLATFORM }}/
