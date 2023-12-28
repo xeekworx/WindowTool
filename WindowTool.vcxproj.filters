@@ -8,6 +8,9 @@
     <Filter Include="source">
       <UniqueIdentifier>{41a97ca4-7ee9-4174-8811-567d50071bb4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="workflows">
+      <UniqueIdentifier>{e4219350-bd48-4d2a-b743-a054109951cd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\main.cpp">
@@ -30,5 +33,10 @@
     <ClInclude Include="source\window_actions.h">
       <Filter>source</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include=".github\workflows\build.yml">
+      <Filter>workflows</Filter>
+    </None>
   </ItemGroup>
 </Project>

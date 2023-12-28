@@ -28,6 +28,9 @@
     <ClInclude Include="source\window.h" />
     <ClInclude Include="source\window_actions.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include=".github\workflows\build.yml" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>

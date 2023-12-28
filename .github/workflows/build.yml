@@ -1,0 +1,50 @@
+name: Build
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+env:
+  SOLUTION_FILE: ./WindowTool.sln
+  BUILD_CONFIG: Release
+  OUTPUT_DIR_X64: ./bin/x64/
+  OUTPUT_DIR_X86: ./bin/x86/
+
+jobs:
+  build:
+    name: Build Project
+    runs-on: windows-latest
+
+    steps:
+    - name: Check Out Code
+      uses: actions/checkout@v4
+
+    - name: Setup Microsoft Build Engine
+      uses: microsoft/setup-msbuild@v1
+
+    - name: Build x64
+      run: |
+        msbuild /p:Configuration=${{ env.BUILD_CONFIG }} /p:Platform=x64 "/p:OutDir=${{ env.OUTPUT_DIR_X64 }}" "${{ env.SOLUTION_FILE }}"
+
+    - name: Build x86
+      run: |
+        msbuild /p:Configuration=${{ env.BUILD_CONFIG }} /p:Platform=x86 "/p:OutDir=${{ env.OUTPUT_DIR_X86 }}" "${{ env.SOLUTION_FILE }}"
+
+    - name: Copy License to Output
+      run: |
+        cp LICENSE "${{ env.OUTPUT_DIR_X64 }}"
+        cp LICENSE "${{ env.OUTPUT_DIR_X86 }}"
+
+    - name: Upload x64 Artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: x64-artifacts
+        path: ${{ env.OUTPUT_DIR_X64 }}
+
+    - name: Upload x86 Artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: x86-artifacts
+        path: ${{ env.OUTPUT_DIR_X86 }}
