@@ -31,9 +31,7 @@ on:
         required: true
         type: string
         default: 'Release'
-  push:
-    branches:
-      - main
+  pull_request:
 
 env:
   BUILD_CONFIG: ${{ inputs.configuration || 'Release' }}
