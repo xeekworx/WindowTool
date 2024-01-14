@@ -1,0 +1,14 @@
+name: Test
+
+permissions: write-all
+  
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build
+    uses: ./.github/workflows/build.yml
+    with:
+      platform: x64
+      configuration: Release
