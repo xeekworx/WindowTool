@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="..\source\window_actions.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\window.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="tests\action_close_window.cpp">
+      <Filter>tests</Filter>
+    </ClCompile>
+    <ClCompile Include="tests\action_find_window.cpp">
+      <Filter>tests</Filter>
+    </ClCompile>
+    <ClCompile Include="tests\action_button_click.cpp">
+      <Filter>tests</Filter>
+    </ClCompile>
+    <ClCompile Include="support\test_window.cpp">
+      <Filter>support</Filter>
+    </ClCompile>
+    <ClCompile Include="support\test_tools.cpp">
+      <Filter>support</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="source">
+      <UniqueIdentifier>{10623957-4a36-43de-b4f6-0859fd9232f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="tests">
+      <UniqueIdentifier>{468c8bb6-b95e-468c-90e3-3831d4bcc9e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="support">
+      <UniqueIdentifier>{bb484c60-b0ce-4cc7-9c6c-0858c281bab7}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="support\test_tools.h">
+      <Filter>support</Filter>
+    </ClInclude>
+    <ClInclude Include="support\test_window.h">
+      <Filter>support</Filter>
+    </ClInclude>
+    <ClInclude Include="support\base_test.h">
+      <Filter>support</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
