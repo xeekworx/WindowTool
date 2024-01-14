@@ -1,14 +1,84 @@
 name: Test
 
-permissions: write-all
-  
 on:
   workflow_dispatch:
+  pull_request:
+  push:
+    branches: [ main ]
+
+env:
+  BUILD_CONFIG: Debug # Release
+  PLATFORM: x64 # x85
+  TEST_PROJECT_DIR: ./Tests
+  PROJECT_FILE: Tests.vcxproj
+  TEST_EXEC_FILE: Tests.exe
+  TEST_RESULT_FILE_PATH: ${{ github.workspace }}/test-results.xml
 
 jobs:
-  build:
-    name: Build
-    uses: ./.github/workflows/build.yml
-    with:
-      platform: x64
-      configuration: Release
+  build-and-test:
+    name: Build & Run Tests
+    runs-on: windows-latest
+
+    steps:
+    - name: Check Out Code
+      uses: actions/checkout@v4
+
+    - name: Setup Microsoft Build Engine
+      uses: microsoft/setup-msbuild@v1
+
+    - name: Restore NuGet Packages
+      working-directory: ${{ env.TEST_PROJECT_DIR }}
+      run: |
+        nuget restore `
+          ./packages.config `
+          -PackagesDirectory "${{ github.workspace }}/packages"
+
+    - name: Build Project
+      working-directory: ${{ env.TEST_PROJECT_DIR }}
+      run: |
+        msbuild `
+          "/p:Configuration=${{ env.BUILD_CONFIG }}" `
+          "/p:Platform=${{ env.PLATFORM }}" `
+          "/p:RestorePackagesPath=${{ github.workspace }}/packages" `
+          "${{ env.PROJECT_FILE }}"
+
+    - name: Run Google Tests
+      working-directory: ${{ env.TEST_PROJECT_DIR }}
+      env:
+        BINARY_PATH: ./bin/${{ env.PLATFORM }}/${{ env.BUILD_CONFIG }}/${{ env.TEST_EXEC_FILE }}
+      run: |
+        ${{ env.BINARY_PATH }} `
+        "--gtest_output=xml:${{ env.TEST_RESULT_FILE_PATH }}"
+
+    - name: Upload Test Results
+      uses: actions/upload-artifact@v4
+      with:
+        name: gtest-results
+        path: ${{ env.TEST_RESULT_FILE_PATH }}
+
+  publish-test-results:
+    name: Download & Publish Results
+    needs: build-and-test
+    runs-on: ubuntu-latest
+    if: always()
+    
+    permissions:
+      checks: write
+      pull-requests: write
+
+    steps:
+    - name: Download Test Results
+      uses: actions/download-artifact@v4
+      with:
+        name: gtest-results
+        path: ./gtest-results
+
+    - name: Display Structure of Downloaded Files
+      run: ls -R ./gtest-results
+
+    - name: Publish Test Results
+      uses: EnricoMi/publish-unit-test-result-action@v2
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        files: ./gtest-results/test-results.xml
+        check_name: Test Results

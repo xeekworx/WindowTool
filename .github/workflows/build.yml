@@ -37,6 +37,7 @@ env:
   BUILD_CONFIG: ${{ inputs.configuration || 'Release' }}
   PLATFORM: ${{ inputs.platform || 'x64' }}
   SOLUTION_FILE: ./WindowTool.sln
+  PROJECT_FILE: ./WindowTool.vcxproj
   OUTPUT_DIR: ./bin/
 
 jobs:
@@ -57,7 +58,7 @@ jobs:
           "/p:Configuration=${{ env.BUILD_CONFIG }}" `
           "/p:Platform=${{ env.PLATFORM }}" `
           "/p:OutDir=${{ env.OUTPUT_DIR }}${{ env.PLATFORM }}/" `
-          "${{ env.SOLUTION_FILE }}"
+          "${{ env.PROJECT_FILE }}"
 
     - name: Upload Artifacts
       uses: actions/upload-artifact@v4
