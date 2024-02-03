@@ -38,6 +38,7 @@ env:
   PLATFORM: ${{ inputs.platform || 'x64' }}
   SOLUTION_FILE: ./WindowTool.sln
   PROJECT_FILE: ./WindowTool.vcxproj
+  OUTPUT_ASSEMBLY_NAME: WindowTool
   OUTPUT_DIR: ./bin/
 
 jobs:
@@ -58,7 +59,23 @@ jobs:
           "/p:Configuration=${{ env.BUILD_CONFIG }}" `
           "/p:Platform=${{ env.PLATFORM }}" `
           "/p:OutDir=${{ env.OUTPUT_DIR }}${{ env.PLATFORM }}/" `
+          "/p:AssemblyName=${{ env.OUTPUT_ASSEMBLY_NAME }}" `
           "${{ env.PROJECT_FILE }}"
+
+    - name: Decode and Save Code Signing Certificate
+      run: |
+        $certBase64 = "${{ secrets.CODE_SIGN_CERT_BASE64 }}"
+        $certBytes = [System.Convert]::FromBase64String($certBase64)
+        $certPath = "code-sign-cert.pfx"
+        [System.IO.File]::WriteAllBytes($certPath, $certBytes)
+      shell: pwsh
+
+    - name: Sign Executable
+      run: |
+        $certPassword = "${{ secrets.CODE_SIGN_PASSWORD }}"
+        $secureCertPassword = ConvertTo-SecureString -String $certPassword -AsPlainText -Force
+        .\scripts\SignCode.ps1 -CertPath "code-sign-cert.pfx" -CertPassword $secureCertPassword -BinaryPath "${{ env.OUTPUT_DIR }}${{ env.PLATFORM }}/${{ env.OUTPUT_ASSEMBLY_NAME }}.exe"
+      shell: pwsh
 
     - name: Upload Artifacts
       uses: actions/upload-artifact@v4
