@@ -1,36 +1,57 @@
+---
 name: Build
 
 on:
   workflow_dispatch:
     inputs:
       platform:
-        description: 'Build Platform'
+        description: "Build Platform"
         required: true
         type: choice
-        default: 'x64'
+        default: "x64"
         options:
           - x64
           - x86
       configuration:
-        description: 'Build Configuration'
+        description: "Build Configuration"
         required: true
         type: choice
-        default: 'Release'
+        default: "Release"
         options:
           - Release
           - Debug
+      assembly:
+        description: "The built assembly name without the .exe extension"
+        required: false
+        type: string
+        default: "WindowTool"
+      enable_signing:
+        description: "Enable code signing"
+        required: false
+        type: boolean
+        default: true
   workflow_call:
     inputs:
       platform:
-        description: 'Build Platform'
+        description: "Build Platform"
         required: true
         type: string
-        default: 'x64'
+        default: "x64"
       configuration:
-        description: 'Build Configuration'
+        description: "Build Configuration"
         required: true
         type: string
-        default: 'Release'
+        default: "Release"
+      assembly:
+        description: "The built assembly name without the .exe extension"
+        required: false
+        type: string
+        default: "WindowTool"
+      enable_signing:
+        description: "Enable code signing"
+        required: false
+        type: boolean
+        default: true
   pull_request:
 
 env:
@@ -38,6 +59,8 @@ env:
   PLATFORM: ${{ inputs.platform || 'x64' }}
   SOLUTION_FILE: ./WindowTool.sln
   PROJECT_FILE: ./WindowTool.vcxproj
+  OUTPUT_ASSEMBLY_NAME: ${{ inputs.assembly || 'WindowTool' }}
+  ENABLE_SIGNING: ${{ inputs.enable_signing || false }}
   OUTPUT_DIR: ./bin/
 
 jobs:
@@ -46,22 +69,41 @@ jobs:
     runs-on: windows-latest
 
     steps:
-    - name: Check Out Code
-      uses: actions/checkout@v4
+      - name: Check Out Code
+        uses: actions/checkout@v4
 
-    - name: Setup Microsoft Build Engine
-      uses: microsoft/setup-msbuild@v1
+      - name: Setup Microsoft Build Engine
+        uses: microsoft/setup-msbuild@v2
 
-    - name: Build
-      run: |
-        msbuild `
-          "/p:Configuration=${{ env.BUILD_CONFIG }}" `
-          "/p:Platform=${{ env.PLATFORM }}" `
-          "/p:OutDir=${{ env.OUTPUT_DIR }}${{ env.PLATFORM }}/" `
-          "${{ env.PROJECT_FILE }}"
+      - name: Build
+        run: |
+          msbuild `
+            "/p:Configuration=${{ env.BUILD_CONFIG }}" `
+            "/p:Platform=${{ env.PLATFORM }}" `
+            "/p:OutDir=${{ env.OUTPUT_DIR }}${{ env.PLATFORM }}/" `
+            "/p:AssemblyName=${{ env.OUTPUT_ASSEMBLY_NAME }}" `
+            "${{ env.PROJECT_FILE }}"
 
-    - name: Upload Artifacts
-      uses: actions/upload-artifact@v4
-      with:
-        name: ${{ env.PLATFORM }}-artifact
-        path: ${{ env.OUTPUT_DIR }}${{ env.PLATFORM }}/
+      - name: Decode and Save Code Signing Certificate
+        if: ${{ env.ENABLE_SIGNING == 'true' }}
+        run: |
+          $certBase64 = "${{ secrets.CODE_SIGN_CERT_BASE64 }}"
+          $certBytes = [System.Convert]::FromBase64String($certBase64)
+          $certPath = "code-sign-cert.pfx"
+          [System.IO.File]::WriteAllBytes($certPath, $certBytes)
+        shell: pwsh
+
+      - name: Sign Executable
+        if: ${{ env.ENABLE_SIGNING == 'true' }}
+        run: |
+          $certPassword = "${{ secrets.CODE_SIGN_PASSWORD }}"
+          $secureCertPassword = ConvertTo-SecureString -String $certPassword -AsPlainText -Force
+          .\scripts\SignCode.ps1 -CertPath "code-sign-cert.pfx" -CertPassword $secureCertPassword -BinaryPath "${{ env.OUTPUT_DIR }}${{ env.PLATFORM }}/${{ env.OUTPUT_ASSEMBLY_NAME }}.exe"
+        shell: pwsh
+
+      - name: Upload Artifacts
+        if: github.event_name != 'pull_request'
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.PLATFORM }}-artifact
+          path: ${{ env.OUTPUT_DIR }}${{ env.PLATFORM }}/
