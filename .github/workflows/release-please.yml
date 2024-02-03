@@ -10,7 +10,6 @@ permissions:
 
 env:
   APP_NAME: WindowTool
-  BUILD_CONFIGURATION: Release
 
 jobs:
   release:
@@ -36,7 +35,7 @@ jobs:
     uses: ./.github/workflows/build.yml
     with:
       platform: x64
-      configuration: ${{ env.BUILD_CONFIGURATION }}
+      configuration: Release
 
   build-x86:
     name: Build x86 Release
@@ -45,7 +44,7 @@ jobs:
     uses: ./.github/workflows/build.yml
     with:
       platform: x86
-      configuration: ${{ env.BUILD_CONFIGURATION }}
+      configuration: Release
 
   publish:
     name: Publish Release
