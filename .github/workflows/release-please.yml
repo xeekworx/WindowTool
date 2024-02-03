@@ -5,17 +5,71 @@ on:
       - main
 
 permissions:
-    contents: write
-    pull-requests: write
+  contents: write
+  pull-requests: write
+
+env:
+  APP_NAME: WindowTool
+  BUILD_CONFIGURATION: Release
 
 jobs:
   release:
     runs-on: ubuntu-latest
+    outputs:
+      release_created: ${{ steps.release.outputs.release_created }}
+      tag_name: ${{ steps.release.outputs.tag_name }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - uses: google-github-actions/release-please-action@v4
+      - name: Release Please
+        uses: google-github-actions/release-please-action@v4
+        id: release
         with:
           token: ${{ secrets.RELEASE_PLEASE_TOKEN }}
           release-type: simple
+
+  build-x64:
+    name: Build x64 Release
+    needs: release
+    if: ${{ needs.release.outputs.release_created }}
+    uses: ./.github/workflows/build.yml
+    with:
+      platform: x64
+      configuration: $BUILD_CONFIGURATION
+
+  build-x86:
+    name: Build x86 Release
+    needs: release
+    if: ${{ needs.release.outputs.release_created }}
+    uses: ./.github/workflows/build.yml
+    with:
+      platform: x86
+      configuration: $BUILD_CONFIGURATION
+
+  publish:
+    name: Publish Release
+    runs-on: ubuntu-latest
+    needs: [release,build-x64, build-x86]
+    if: ${{ needs.release.outputs.release_created }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Download Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          pattern: "*-artifact"
+          merge-multiple: false
+
+      - name: Zip Artifacts
+        run: |
+          mv x86-artifact x86
+          mv x64-artifact x64
+          zip -r "$APP_NAME-${{ needs.release.outputs.tag_name }}.zip" x86 x64 LICENSE
+
+      - name: Upload Release Artifact
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh release upload ${{ needs.release.outputs.tag_name }} "$APP_NAME-${{ needs.release.outputs.tag_name }}.zip"
+  
