@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.1](https://github.com/xeekworx/WindowTool/compare/v1.1.0...v1.1.1) (2024-02-03)
+
+
+### Bug Fixes
+
+* build workflow should inherit secrets from release-please ([#15](https://github.com/xeekworx/WindowTool/issues/15)) ([b3244e6](https://github.com/xeekworx/WindowTool/commit/b3244e6b34b2b3f06452a22f9ce4cca14146cfb1))
+
 ## [1.1.0](https://github.com/xeekworx/WindowTool/compare/v1.2.1...v1.1.0) (2024-02-03)
 
 
