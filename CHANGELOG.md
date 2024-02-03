@@ -1,0 +1,13 @@
+# Changelog
+
+## [1.1.0](https://github.com/xeekworx/WindowTool/compare/v1.2.1...v1.1.0) (2024-02-03)
+
+
+### Features
+
+* add build artifacts to release please ([#6](https://github.com/xeekworx/WindowTool/issues/6)) ([b498b57](https://github.com/xeekworx/WindowTool/commit/b498b579496e19165da81d8ce6bb8c0d16a2f85a))
+* add build workflow ([6ec49ba](https://github.com/xeekworx/WindowTool/commit/6ec49ba39a4220933269f33b56a43f7cdbc891aa))
+* add publish workflow ([18f5987](https://github.com/xeekworx/WindowTool/commit/18f5987f95aab66b6f8befb9ebe60f3054029164))
+* build on pull-requests ([#2](https://github.com/xeekworx/WindowTool/issues/2)) ([b39aa03](https://github.com/xeekworx/WindowTool/commit/b39aa031a2afad573c9428eb7bb8cb4bbdb593d1))
+* code sign builds ([#13](https://github.com/xeekworx/WindowTool/issues/13)) ([5b7b68b](https://github.com/xeekworx/WindowTool/commit/5b7b68b4328983bfee8bdd72993dab9e191b9542))
+* making platform and build config parameters to the build workflow ([ad75254](https://github.com/xeekworx/WindowTool/commit/ad75254513217cbf93567fc1041d7bbae9345b23))
