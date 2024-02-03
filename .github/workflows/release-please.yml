@@ -36,7 +36,7 @@ jobs:
     uses: ./.github/workflows/build.yml
     with:
       platform: x64
-      configuration: $BUILD_CONFIGURATION
+      configuration: ${{ env.BUILD_CONFIGURATION }}
 
   build-x86:
     name: Build x86 Release
@@ -45,7 +45,7 @@ jobs:
     uses: ./.github/workflows/build.yml
     with:
       platform: x86
-      configuration: $BUILD_CONFIGURATION
+      configuration: ${{ env.BUILD_CONFIGURATION }}
 
   publish:
     name: Publish Release
