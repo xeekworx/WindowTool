@@ -28,6 +28,12 @@ bool window::is_visible() const
 	return ::IsWindowVisible(_hWnd) == TRUE;
 }
 
+bool window_tool::window::minimize() const
+{
+	::ShowWindow(_hWnd, SW_MINIMIZE);
+	return ::IsIconic(_hWnd) == TRUE;
+}
+
 bool window::click_button(const std::wstring& name) const
 {
 	if (!is_valid()) return false;

@@ -22,6 +22,7 @@ namespace window_tool {
 
 		bool on_find(const window& win) const;
 		bool on_close(const window& win) const;
+		bool on_minimize(const window& win) const;
 		bool on_click_button(const window& win, const std::wstring& button_name) const;
 	};
 }

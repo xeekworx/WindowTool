@@ -22,6 +22,9 @@
     <ClCompile Include="support\test_tools.cpp">
       <Filter>support</Filter>
     </ClCompile>
+    <ClCompile Include="tests\action_minimize_window.cpp">
+      <Filter>tests</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="source">
@@ -44,5 +47,8 @@
     <ClInclude Include="support\base_test.h">
       <Filter>support</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
 </Project>
