@@ -38,5 +38,11 @@
     <None Include=".github\workflows\build.yml">
       <Filter>workflows</Filter>
     </None>
+    <None Include=".github\workflows\release-please.yml">
+      <Filter>workflows</Filter>
+    </None>
+    <None Include=".github\workflows\test.yml">
+      <Filter>workflows</Filter>
+    </None>
   </ItemGroup>
 </Project>

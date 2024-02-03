@@ -6,8 +6,12 @@
 
 using namespace window_tool::tests;
 
-test_window::test_window()
-	: _hwnd(NULL), _hwnd_button(NULL), _button_clicked(false), _window_closed(false)
+test_window::test_window() : 
+	_hwnd(NULL),
+	_hwnd_button(NULL),
+	_button_clicked(false),
+	_window_minimized(false),
+	_window_closed(false)
 {
 }
 
@@ -139,6 +143,11 @@ bool window_tool::tests::test_window::was_closed() const
 	return _window_closed;
 }
 
+bool window_tool::tests::test_window::was_minimized() const
+{
+	return _window_minimized;
+}
+
 std::wstring test_window::get_title() const
 {
 	return test_window::get_window_text(_hwnd);
@@ -167,6 +176,9 @@ LRESULT test_window::handle_message(test_window* current_window, UINT uMsg, WPAR
 	switch (uMsg) {
 	case WM_COMMAND:
 		_button_clicked = LOWORD(wParam) == 1;
+		break;
+	case WM_SIZE:
+		_window_minimized = wParam == SIZE_MINIMIZED;
 		break;
 	case WM_CLOSE:
 		_window_closed = true;

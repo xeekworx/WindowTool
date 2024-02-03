@@ -17,6 +17,7 @@ namespace window_tool {
 		HWND get_handle() const;
 		bool is_valid() const;
 		bool is_visible() const;
+		bool minimize() const;
 		bool click_button(const std::wstring& name) const;
 		bool close() const;
 		std::wstring get_text() const;

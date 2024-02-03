@@ -123,6 +123,7 @@
     <ClCompile Include="tests\action_button_click.cpp" />
     <ClCompile Include="tests\action_close_window.cpp" />
     <ClCompile Include="tests\action_find_window.cpp" />
+    <ClCompile Include="tests\action_minimize_window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\WindowTool.vcxproj">

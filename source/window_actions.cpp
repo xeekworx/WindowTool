@@ -54,6 +54,7 @@ int window_actions::run()
 	for (auto& win : windows) {
 		if (action == L"find") actionResult = on_find(win);
 		else if (action == L"close") actionResult = on_close(win);
+		else if (action == L"minimize") actionResult = on_minimize(win);
 		else if (action == L"click") actionResult = on_click_button(win, button_name);
 		else
 		{
@@ -87,6 +88,7 @@ void window_actions::display_usage() const
 		<< L"Actions that can be used:" << std::endl
 		<< L"  find     Outputs \"True\" if the window is found" << std::endl
 		<< L"  close    Attempt to close the window" << std::endl
+		<< L"  minimize Minimize the window" << std::endl
 		<< L"  click    Click a button with the name given" << std::endl;
 }
 
@@ -99,6 +101,11 @@ bool window_actions::on_find(const window& win) const
 bool window_actions::on_close(const window& win) const
 {
 	return win.close();
+}
+
+bool window_tool::window_actions::on_minimize(const window& win) const
+{
+	return win.minimize();
 }
 
 bool window_actions::on_click_button(const window& win, const std::wstring& button_name) const

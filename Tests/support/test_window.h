@@ -23,6 +23,7 @@ namespace window_tool::tests {
 		bool was_button_clicked() const;
 		bool has_button() const;
 		bool was_closed() const;
+		bool was_minimized() const;
 		std::wstring get_title() const;
 		std::wstring get_button_text() const;
 
@@ -31,6 +32,7 @@ namespace window_tool::tests {
 		HWND _hwnd, _hwnd_button;
 		bool _button_clicked;
 		bool _window_closed;
+		bool _window_minimized;
 
 		test_window();
 
