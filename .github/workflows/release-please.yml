@@ -33,6 +33,7 @@ jobs:
     needs: release
     if: ${{ needs.release.outputs.release_created }}
     uses: ./.github/workflows/build.yml
+    secrets: inherit
     with:
       platform: x64
       configuration: Release
@@ -42,6 +43,7 @@ jobs:
     needs: release
     if: ${{ needs.release.outputs.release_created }}
     uses: ./.github/workflows/build.yml
+    secrets: inherit
     with:
       platform: x86
       configuration: Release
