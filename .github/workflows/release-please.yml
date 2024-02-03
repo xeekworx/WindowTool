@@ -65,10 +65,10 @@ jobs:
         run: |
           mv x86-artifact x86
           mv x64-artifact x64
-          zip -r "$APP_NAME-${{ needs.release.outputs.tag_name }}.zip" x86 x64 LICENSE
+          zip -r "${{ env.APP_NAME }}-${{ needs.release.outputs.tag_name }}.zip" x86 x64 LICENSE
 
       - name: Upload Release Artifact
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: gh release upload ${{ needs.release.outputs.tag_name }} "$APP_NAME-${{ needs.release.outputs.tag_name }}.zip"
+        run: gh release upload ${{ needs.release.outputs.tag_name }} "${{ env.APP_NAME }}-${{ needs.release.outputs.tag_name }}.zip"
   
