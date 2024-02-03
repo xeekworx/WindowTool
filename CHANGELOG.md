@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0](https://github.com/xeekworx/WindowTool/compare/v1.1.1...v1.2.0) (2024-02-03)
+
+
+### Features
+
+* add [window] minimize action ([#17](https://github.com/xeekworx/WindowTool/issues/17)) ([efb0b17](https://github.com/xeekworx/WindowTool/commit/efb0b17acfb199824c00fc646c17779d736507b7))
+
 ## [1.1.1](https://github.com/xeekworx/WindowTool/compare/v1.1.0...v1.1.1) (2024-02-03)
 
 
