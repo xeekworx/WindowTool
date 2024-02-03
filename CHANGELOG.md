@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.1](https://github.com/xeekworx/WindowTool/compare/v1.2.0...v1.2.1) (2024-02-03)
+
+
+### Bug Fixes
+
+* correct APP_NAME env for release-please.yml ([#10](https://github.com/xeekworx/WindowTool/issues/10)) ([4210c13](https://github.com/xeekworx/WindowTool/commit/4210c13ecbb50ffdeb9f8711aa2a04bacff9a438))
+
 ## [1.2.0](https://github.com/xeekworx/WindowTool/compare/v1.1.0...v1.2.0) (2024-02-03)
 
 
