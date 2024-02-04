@@ -7,11 +7,12 @@ WindowTool is a versatile C++ tool designed for automated interaction with windo
 
 ## Usage
 To use `WindowTool.exe`, follow the command-line syntax below:
-| Action  | Description                                                 |
-| ------- | ----------------------------------------------------------- |
-| find    | Outputs "True" if the window is found or "False otherwise.  |
-| close   | Attempt to close the window.                                |
-| click   | Click a button with the name given a the third argument.    |
+| Action   | Description                                                 |
+| -------- | ----------------------------------------------------------- |
+| find     | Outputs "True" if the window is found or "False otherwise.  |
+| minimize | Minimize the window.                                        |
+| close    | Attempt to close the window.                                |
+| click    | Click a button with the name given a the third argument.    |
 
 `0` is returned for success or `1` for error. If the action occurred as asked, the tool will output (stdout) `True` or `False`.  
 #### Example:
