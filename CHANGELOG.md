@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.0](https://github.com/xeekworx/WindowTool/compare/v1.2.0...v1.3.0) (2024-11-25)
+
+
+### Features
+
+* test release 2 ([#21](https://github.com/xeekworx/WindowTool/issues/21)) ([4222808](https://github.com/xeekworx/WindowTool/commit/42228086c0ebf4850644ba5853db20ad28489c4a))
+
 ## [1.2.0](https://github.com/xeekworx/WindowTool/compare/v1.1.1...v1.2.0) (2024-02-03)
 
 
