@@ -250,3 +250,7 @@ AkavacheSqliteLinkerOverride.cs
 NuGetBuild
 WiX.Toolset.DummyFile.txt
 GitHubVS.sln.DotSettings
+
+# Ignore version.h except in the release branch
+/source/version.h
+!release-branch-*

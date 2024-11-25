@@ -1,4 +1,5 @@
 #include "window_actions.h"
+#include "version.h"
 #include <filesystem>
 #include <iostream>
 #include <locale>
@@ -80,6 +81,7 @@ int window_actions::run()
 
 void window_actions::display_usage() const
 {
+	std::wcout << L"Window Tool Version " << APP_VERSION << std::endl;
 	std::wcout << L"Usage: " << _app_name << L" \"Window Title\" \"Action\" [ButtonName]" << std::endl
 		<< std::endl
 		<< L"Options surrounded by [] are optional, but do not include the brackets." << std::endl

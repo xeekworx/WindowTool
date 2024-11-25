@@ -11,6 +11,7 @@ permissions:
 
 env:
   APP_NAME: WindowTool
+  VER_FILE: ./source/version.h
 
 jobs:
   release:
@@ -28,6 +29,18 @@ jobs:
         with:
           token: ${{ secrets.RELEASE_PLEASE_TOKEN }}
           release-type: simple
+
+      - name: Generate & Commit Version Header
+        if: ${{ steps.release.outputs.release_created }}
+        run: |
+          echo "// Do not modify this file, it is overwritten by release-please.yml!" > ${{ env.VER_FILE }}
+          echo "#pragma once" >> ${{ env.VER_FILE }}
+          echo "constexpr const wchar_t APP_VERSION[] = L\"${{ steps.release.outputs.tag_name }}\"" >> ${{ env.VER_FILE }}
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add  ${{ env.VER_FILE }}
+          git commit -m "chore: update version header to ${{ steps.release.outputs.tag_name }}"
+          git push
 
   build-x64:
     name: Build x64 Release

@@ -1,6 +1,4 @@
-// WindowTool.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
-
+#include "version.h"
 #include "window_actions.h"
 #include <iostream>
 #include <unordered_set>
@@ -8,6 +6,7 @@
 #include <functional>
 
 bool should_show_help(const std::vector<std::wstring>& arguments, std::function<void()> display_func);
+bool should_show_version(const std::vector<std::wstring>& arguments);
 
 int wmain(int argc, wchar_t* argv[])
 {
@@ -16,6 +15,9 @@ int wmain(int argc, wchar_t* argv[])
 		arguments.push_back(argv[i]);
 
 	window_tool::window_actions actions(arguments);
+
+	if (should_show_version(arguments))
+		return 0;
 
 	if (should_show_help(arguments, [actions]() { actions.display_usage(); }))
 		return 0;
@@ -32,6 +34,21 @@ bool should_show_help(const std::vector<std::wstring>& arguments, std::function<
 	if (arguments.size() > 1 && possibleHelpOptions.find(arguments[1]) != possibleHelpOptions.end())
 	{
 		display_func();
+		return true;
+	}
+
+	return false;
+}
+
+bool should_show_version(const std::vector<std::wstring>& arguments)
+{
+	std::unordered_set<std::wstring> possibleVersionOptions = {
+		L"--version", L"-v"
+	};
+
+	if (arguments.size() > 1 && possibleVersionOptions.find(arguments[1]) != possibleVersionOptions.end())
+	{
+		std::wcout << L"v" << APP_VERSION << std::endl;
 		return true;
 	}
 

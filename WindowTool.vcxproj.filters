@@ -33,6 +33,9 @@
     <ClInclude Include="source\window_actions.h">
       <Filter>source</Filter>
     </ClInclude>
+    <ClInclude Include="source\version.h">
+      <Filter>source</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include=".github\workflows\build.yml">

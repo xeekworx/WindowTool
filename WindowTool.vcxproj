@@ -25,6 +25,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\text_compare_type.h" />
+    <ClInclude Include="source\version.h" />
     <ClInclude Include="source\window.h" />
     <ClInclude Include="source\window_actions.h" />
   </ItemGroup>
