@@ -1,5 +1,20 @@
 # Changelog
 
+## [1.3.0](https://github.com/xeekworx/WindowTool/compare/v1.2.0...v1.3.0) (2024-11-26)
+
+
+### Features
+
+* test release 2 ([#21](https://github.com/xeekworx/WindowTool/issues/21)) ([4222808](https://github.com/xeekworx/WindowTool/commit/42228086c0ebf4850644ba5853db20ad28489c4a))
+
+
+### Bug Fixes
+
+* do not commit version.h to main for release please ([#25](https://github.com/xeekworx/WindowTool/issues/25)) ([9017f34](https://github.com/xeekworx/WindowTool/commit/9017f34523d39d177c73e16b40fc9c7a0f8ea01e))
+* force config file for release please ([af3610b](https://github.com/xeekworx/WindowTool/commit/af3610bbc7614c924838c623dd659b6d5afa7a20))
+* overhauling release please and versioning for app ([#29](https://github.com/xeekworx/WindowTool/issues/29)) ([161e9b1](https://github.com/xeekworx/WindowTool/commit/161e9b1f48e8d6f1d20b3a872a4a3fc301583937))
+* update dependabot and release-please ([#23](https://github.com/xeekworx/WindowTool/issues/23)) ([820c02a](https://github.com/xeekworx/WindowTool/commit/820c02a0cb1a91a9d74065aded1c9749e46d864a))
+
 ## [1.2.0](https://github.com/xeekworx/WindowTool/compare/v1.1.1...v1.2.0) (2024-02-03)
 
 
