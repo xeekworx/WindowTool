@@ -24,6 +24,7 @@
     <ClCompile Include="source\window_actions.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="source\resource.h" />
     <ClInclude Include="source\text_compare_type.h" />
     <ClInclude Include="source\version.h" />
     <ClInclude Include="source\window.h" />
@@ -33,6 +34,9 @@
     <None Include=".github\workflows\build.yml" />
     <None Include=".github\workflows\release-please.yml" />
     <None Include=".github\workflows\test.yml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="source\resources.rc" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>

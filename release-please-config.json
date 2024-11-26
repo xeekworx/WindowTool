@@ -1,0 +1,14 @@
+{
+    "release-type": "simple",
+    "extra-files": [
+      "source/version.h",
+      "version.txt",
+      {
+        "type": "regex",
+        "path": "source/resource.rc",
+        "regex": "(?<major>\\d+),(?<minor>\\d+),(?<patch>\\d+)(-(?<preRelease>[\\w.]+))?(\\+(?<build>[-\\w.]+))?",
+        "replacement": "${major},${minor},${patch}${preRelease?'-${preRelease}'}${build?'+${build}'}"
+      }
+    ]
+  }
+  
