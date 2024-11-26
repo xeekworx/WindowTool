@@ -1,2 +1,2 @@
 #pragma once
-constexpr const wchar_t APP_VERSION[] = L"0.0.0";
+constexpr const wchar_t APP_VERSION[] = L"1.2.0";

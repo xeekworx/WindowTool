@@ -36,6 +36,9 @@
     <ClInclude Include="source\version.h">
       <Filter>source</Filter>
     </ClInclude>
+    <ClInclude Include="source\resource.h">
+      <Filter>Resource Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include=".github\workflows\build.yml">
@@ -47,5 +50,10 @@
     <None Include=".github\workflows\test.yml">
       <Filter>workflows</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="source\resources.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>
