@@ -1,14 +1,11 @@
 {
-    "release-type": "simple",
-    "extra-files": [
-      "source/version.h",
-      "version.txt",
-      {
-        "type": "regex",
-        "path": "source/resource.rc",
-        "regex": "(?<major>\\d+),(?<minor>\\d+),(?<patch>\\d+)(-(?<preRelease>[\\w.]+))?(\\+(?<build>[-\\w.]+))?",
-        "replacement": "${major},${minor},${patch}${preRelease?'-${preRelease}'}${build?'+${build}'}"
-      }
-    ]
+  "$schema": "https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json",
+  "release-type": "simple",
+  "extra-files": [
+    "source/version.h",
+    "source/resources.rc"
+  ],
+  "packages": {
+    ".": {}
   }
-  
+}
