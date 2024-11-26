@@ -75,6 +75,10 @@ jobs:
       - name: Setup Microsoft Build Engine
         uses: microsoft/setup-msbuild@v2
 
+      - name: Update Version in resources.rc
+        run: .\scripts\UpdateRcVersions.ps1
+        shell: pwsh
+
       - name: Build
         run: |
           msbuild `
