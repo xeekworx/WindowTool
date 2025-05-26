@@ -25,6 +25,9 @@
     <ClCompile Include="tests\action_minimize_window.cpp">
       <Filter>tests</Filter>
     </ClCompile>
+    <ClCompile Include="tests\action_wait_window.cpp">
+      <Filter>tests</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="source">
