@@ -13,11 +13,16 @@ To use `WindowTool.exe`, follow the command-line syntax below:
 | minimize | Minimize the window.                                        |
 | close    | Attempt to close the window.                                |
 | click    | Click a button with the name given a the third argument.    |
+| wait     | Wait for the window to appear with timeout                  |
 
 `0` is returned for success or `1` for error. If the action occurred as asked, the tool will output (stdout) `True` or `False`.  
 #### Example:
 ```ps
 PS C:\Users\xeek> WindowTool.exe "Title of Window" click "Button Text"
+True
+```
+```ps
+PS C:\Users\xeek> WindowTool.exe "Title of Window" wait 5000
 True
 ```
 ```ps

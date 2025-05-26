@@ -26,19 +26,34 @@ int window_actions::run()
 	std::wstring window_title;
 	std::wstring action;
 	std::wstring button_name;
+	unsigned timeout_ms = 0;
 
 	if (_arguments.size() >= 1)
 	{
 		window_title = _arguments[0];
 	}
+	
 	if (_arguments.size() >= 2)
 	{
 		action = _arguments[1];
 		std::transform(action.begin(), action.end(), action.begin(), ::towlower);
 	}
+
 	if (_arguments.size() >= 3)
 	{
 		button_name = _arguments[2];
+	}
+
+	if (action == L"wait")
+	{
+		if (_arguments.size() < 3)
+		{
+			std::wcout << L"Error: No window title provided for action 'wait'." << std::endl << std::endl;
+			display_usage();
+			return INVALID_ARGS_RESULT;
+		}
+
+		timeout_ms = std::stoul(_arguments[2]);
 	}
 
 	if (_arguments.size() < 3 && action == L"click")
@@ -49,16 +64,15 @@ int window_actions::run()
 	}
 
 	std::list<window> windows;
-	window::find_all(window_title, windows);
+	window::find_all(window_title, windows, text_compare_type::absolute, false, timeout_ms);
 
 	bool actionResult = false, found = false;
 	for (auto& win : windows) {
-		if (action == L"find") actionResult = on_find(win);
+		if (action == L"find" || action == L"wait") actionResult = on_find(win);
 		else if (action == L"close") actionResult = on_close(win);
 		else if (action == L"minimize") actionResult = on_minimize(win);
 		else if (action == L"click") actionResult = on_click_button(win, button_name);
-		else
-		{
+		else {
 			std::wcout << L"Error: Invalid action argument." << std::endl << std::endl;
 			display_usage();
 			return INVALID_ARGS_RESULT;
@@ -91,7 +105,8 @@ void window_actions::display_usage() const
 		<< L"  find     Outputs \"True\" if the window is found" << std::endl
 		<< L"  close    Attempt to close the window" << std::endl
 		<< L"  minimize Minimize the window" << std::endl
-		<< L"  click    Click a button with the name given" << std::endl;
+		<< L"  click    Click a button with the name given" << std::endl
+		<< L"  wait     Wait for the window to appear with timeout" << std::endl;
 }
 
 bool window_actions::on_find(const window& win) const

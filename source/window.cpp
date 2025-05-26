@@ -110,12 +110,14 @@ bool window::find_all(
 	const std::wstring& title,
 	std::list<window>& windows,
 	text_compare_type type,
-	bool case_insensitive
-)
+	bool case_insensitive,
+	unsigned timeout_ms)
 {
-	windows.clear();
-
-	::EnumWindows([](HWND hwnd, LPARAM lParam) -> BOOL
+	const unsigned interval_ms = 100;
+	unsigned waited = 0;
+	while (true) {
+		windows.clear();
+		::EnumWindows([](HWND hwnd, LPARAM lParam) -> BOOL
 		{
 			std::list<window>& windowList = *reinterpret_cast<std::list<window>*>(lParam);
 
@@ -124,10 +126,19 @@ bool window::find_all(
 			return TRUE; // Continue
 		}, reinterpret_cast<LPARAM>(&windows));
 
-	windows.remove_if([title, type, case_insensitive](const window& win)
+		windows.remove_if([title, type, case_insensitive](const window& win)
 		{
 			return !win.compare_title(title, type, case_insensitive);
 		});
 
-	return !windows.empty();
+		if (!windows.empty())
+			return true;
+
+		if (timeout_ms == 0 || waited >= timeout_ms)
+			break;
+
+		::Sleep(interval_ms);
+		waited += interval_ms;
+	}
+	return false;
 }

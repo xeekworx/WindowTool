@@ -32,7 +32,8 @@ namespace window_tool {
 			const std::wstring& title,
 			std::list<window>& windows,
 			text_compare_type type = text_compare_type::absolute,
-			bool case_insensitive = false
+			bool case_insensitive = false,
+			unsigned timeout_ms = 0
 		);
 	};
 }
