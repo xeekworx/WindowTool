@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.4.0](https://github.com/xeekworx/WindowTool/compare/v1.3.0...v1.4.0) (2025-05-26)
+
+
+### Features
+
+* new wait action with timeout ([#37](https://github.com/xeekworx/WindowTool/issues/37)) ([a94a0fc](https://github.com/xeekworx/WindowTool/commit/a94a0fcd63581116fbe146d982a335629c26e609))
+
+
+### Bug Fixes
+
+* release please clean-up and failure on premature publishing ([#39](https://github.com/xeekworx/WindowTool/issues/39)) ([9f2c525](https://github.com/xeekworx/WindowTool/commit/9f2c5257e0d7223ca187cd7d24d579a552dd648b))
+
 ## [1.3.0](https://github.com/xeekworx/WindowTool/compare/v1.2.0...v1.3.0) (2024-11-26)
 
 
