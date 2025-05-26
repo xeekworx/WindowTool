@@ -5,7 +5,15 @@
 
 version: 2
 updates:
-  - package-ecosystem: "nuget" # See documentation for possible values
-    directory: "/" # Location of package manifests
+  # # Dependabot had regression where it stopped working for nuget packages in
+  # # C++ projects.
+  # # See https://github.com/dependabot/dependabot-core/issues/9711
+  # - package-ecosystem: "nuget" # See documentation for possible values
+  #   directory: "/" # Location of package manifests
+  #   schedule:
+  #     interval: "weekly"
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
     schedule:
       interval: "weekly"
